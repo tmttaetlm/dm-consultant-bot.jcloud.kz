@@ -1,40 +1,69 @@
 <?php
-    $body = file_get_contents('php://input'); 
-    $data = json_decode($body, true); 
-    
-    include_once('tgclass.php');
-    //include_once('messageHandler.php');
-    //include_once('callbackHandler.php');
+    include_once 'db.php';
+    include_once 'tgclass.php';
 
+    use Db;
+
+    $body = file_get_contents('php://input');
+    $data = json_decode($body, true);
+    file_put_contents('log','['.(date('Y-m-d H:i:s')).'] '.$body."\n",FILE_APPEND);
     $bot = new TG('2099253626:AAH8wHq3fRhWpNB3By6R5u2FLBdoLWfdOso');
 
-    $chatId = $data['message']['chat']['id'];
-
-    if ($text == '/start') {
-        $answer = "Добро пожаловать!\nИнтерфейс тілін таңданыз\n----------------------------------\nВыберите язык интерфейса";
-        $keyboard = ["inline_keyboard" => [[['text' => 'Қазақша', 'callback_data' => 'kaz'],['text' => 'Русский', 'callback_data' => 'rus']]]];
-        $bot->send($chatId,$answer,'HTML',$keyboard);
-    };
-
-    /*if ($data['message']) {
-        messageHandler($data, $chatId, $data['message']['text']);
+    if (array_key_exists('message', $data)) {
+        $chatId = $data['message']['chat']['id'];
+        if ($data['message']['text'] == '/start') {
+            $answer = "Добро пожаловать!\nИнтерфейс тілін таңданыз\n----------------------------------\nВыберите язык интерфейса";
+            $keyboard = ["inline_keyboard" => [[['text' => 'Қазақша', 'callback_data' => 'kaz'],['text' => 'Русский', 'callback_data' => 'rus']]]];
+            $bot->send($chatId,$answer,'HTML',$keyboard);
+            $values = $data['message']['from']['id'].','.$data['message']['from']['username'];
+            $res = insertData('users', 'tgId,tgName', $values);
+            $bot->send('248598993',$res,'HTML');
+        };
+        switch ($data['message']['text']) {
+            case 'Тест':
+                $answer = "Работает";
+                $bot->send($chatId,$answer,'HTML');
+                break;
+        }
     }
-    if ($data['callback_query']) {
-        callbackHandler($data, $chatId, $data['callback_query']['data']);
-    }*/
+    if (array_key_exists('callback_query', $data)) {
+        $chatId = $data['callback_query']['from']['id'];
+        switch ($data['callback_query']['data']) {
+            case 'kaz':
+                $answer = "Сіз қазақ тілін таңданыңыз";
+                $bot->send($chatId,$answer,'HTML');
+                break;
+            case 'rus':
+                $answer = "Вы выбрали русский язык";
+                $bot->send($chatId,$answer,'HTML');
+                break;
+        }
+    }
 
-    /*function newUser($params)
+    function insertData($table, $fields, $values)
     {
-        $query = "INSERT INTO sd_tickets (type,hardware,description,customer,datetime,priority,contact,executor,status)
-                  VALUES (:type,:hardware,:description,:customer,:datetime,:priority,:contact,:executor,'send');";
+        $query = "INSERT INTO ".$table." (".$fields.") VALUES (".$values.");";
         $db = Db::getDb();
-        $db->selectQuery($query,$params);
+        return $db->IUDQuery($query,[]);
+    }
+    function updateData($values)
+    {
+        $query = "UPDATE ".$table." SET ";
+        foreach ($value as $value) {
+            $query .= $value[0]." = ".$value[1].", ";
+        }
+        $query = substr($query, 0, length($query)-2).";";
+        $db = Db::getDb();
+        return $db->IUDQuery($query,[]);
+    }
+    function selectData($table, $fields)
+    {
+        $query = "SELECT ".$fields." FROM ".$table.";";
+        $db = Db::getDb();
+        return $db->selectQuery($query,[]);
+    }
 
-        $recipient = 'helpshamdan@gmail.com';
-        $text = 'Ваша заявка отправлена в службу поддержки ТОО "ШамДан". После исполнения заявки вы получите уведомление на почту.';
-        sendMail($recipient, $text);
-        $recipient = 'info@shamdan.kz';
-        $text = 'Получена новая заявка.';
-        sendMail($recipient, $text);
-    }*/
+    if (error_get_last()['message'] != '') {
+        $bot->send('248598993',error_get_last()['message'].' at line '.error_get_last()['line'],'HTML');
+    }
 ?>

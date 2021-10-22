@@ -8,7 +8,7 @@ class TG {
         $this->token = $token; 
     }
 
-    public function send($id, $message, $parse_mode = null, $keyboard) {   
+    public function send($id, $message, $parse_mode, $keyboard = null) {   
         
         //Удаление клавы
         if($keyboard == "DEL"){		

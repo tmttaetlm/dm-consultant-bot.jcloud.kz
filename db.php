@@ -1,6 +1,4 @@
 <?php
-namespace Components;
-
 use PDO;
 
 /* DB
@@ -14,7 +12,7 @@ class DB {
     private function __construct(){
         
         //Подготовка параметров для подключения к базе данных
-        $host = 'localhost';
+        $host = '127.0.0.1';
         $dbname = 'dmdb';
         $user = 'dm_admin';
         $password = 'Qwerty1!'; 
