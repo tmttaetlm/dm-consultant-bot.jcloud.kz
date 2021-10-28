@@ -1,5 +1,5 @@
 <?php
-use PDO;
+//use PDO;
 
 /* DB
  * Работа с базой данных
@@ -46,34 +46,8 @@ class DB {
         return self::$db;
     }
 
-    //Запрос на добавление, обновление, удаление записей в БД
-    public function IUDquery($query,array $params = null) {
-        try {
-            $stmt= $this->link->prepare($query);
-            if ($params) 
-            {
-                foreach ($params as $key => $value) 
-                {
-                    $bindKey = ':' . $key;
-                    $stmt->bindValue($bindKey, $params[$key]);
-                }
-            }
-            $stmt->execute();
-            return true;
-        } catch (PDOException $e) {
-            echo 'Data base problem:<br>';
-            echo $e->getMessage(); 
-            die();
-        }
-    }
-    
-    public function InsertDataByQ($query, $data) {
-        $stmt = $this->link->prepare($query);
-        $stmt->execute($data);
-    }
-
     //Запрос на выборку из БД
-    public function selectQuery($query,array $params = null) {
+    public function execQuery($query,array $params = null) {
         try {
             $stmt= $this->link->prepare($query);
             if ($params) 
