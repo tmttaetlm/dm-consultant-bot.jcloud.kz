@@ -8,8 +8,7 @@ class TG {
         $this->token = $token; 
     }
 
-    public function send($id, $message, $parse_mode, $keyboard = null) {   
-        
+    public function send($id, $message, $parse_mode, $keyboard = null) {
         //Удаление клавы
         if($keyboard == "DEL"){		
             $keyboard = array(
@@ -19,7 +18,6 @@ class TG {
         if($keyboard){
             //Отправка клавиатуры
             $encodedMarkup = json_encode($keyboard);
-            
             $data = array(
                 'chat_id' => $id,
                 'text' => $message,
@@ -29,15 +27,34 @@ class TG {
         }else{
             //Отправка сообщения
             $data = array(
-                'chat_id'      => $id,
-                'text'     => $message,
+                'chat_id' => $id,
+                'text' => $message,
                 'parse_mode' => $parse_mode,
             );
         }
         
         $out = $this->request('sendMessage', $data);       
         return $out;
-    }         
+    }
+    
+    public function sendWithPhoto($id, $message, $parse_mode, $photo = null) {   
+        if($photo){
+            $data = array(
+                'chat_id' => $id,
+                'caption' => $message,
+                'photo' => $photo,
+                'parse_mode' => $parse_mode
+            );
+        }else{
+            $data = array(
+                'chat_id' => $id,
+                'caption' => $message,
+                'parse_mode' => $parse_mode,
+            );
+        }
+        $out = $this->request('sendPhoto', $data);       
+        return $out;
+    }
 
     public function getPhoto($data){
         $out = $this->request('getFile', $data);        
