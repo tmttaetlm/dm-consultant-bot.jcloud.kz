@@ -2,8 +2,10 @@
 	error_reporting(E_ALL);
 	ini_set('display_errors', 1);
 
-    include_once 'db.php';
-    include_once 'tgclass.php';
+    define('ROOT', $_SERVER['DOCUMENT_ROOT']);
+    include_once ROOT.'/application/Components/Db.php';
+    include_once ROOT.'/bot/tgclass.php';
+    use Components\Db;
 
     $body = file_get_contents('php://input');
     $data = json_decode($body, true);

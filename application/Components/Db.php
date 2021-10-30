@@ -1,11 +1,13 @@
 <?php
-//use PDO;
+namespace Components;
+
+use PDO;
 
 /* DB
  * Работа с базой данных
  */
 
-class DB {
+class Db {
     private static $db;
     private $link;
 
@@ -62,9 +64,11 @@ class DB {
             return $stmt->fetchAll();
         } catch (PDOException $e) {
             echo 'Data base problem:<br>';
-            echo $e->getMessage(); 
+            return $e->getMessage(); 
             die();            
         }
     }
-
+    
 }
+
+echo 'OK';
