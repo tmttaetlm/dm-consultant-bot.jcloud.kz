@@ -57,11 +57,4 @@ class User
             }
         }
     }
-
-    public function checkAdmin() {
-        if (in_array('adminPanel', $this->getPriveleges())){
-            return true;
-        }
-        else return false;
-    }
 }

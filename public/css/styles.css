@@ -116,6 +116,7 @@ textarea {
 
 .title {
     display: flex;
+    float: left;
 }
 .title img {
     border-radius: 50%;

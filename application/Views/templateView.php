@@ -3,7 +3,7 @@
     <head>
         <title>Деньги Маркет Bot</title>
         <meta charset="utf-8">
-        <link rel="stylesheet" type="text/css" href="/public/css/styles_0.1.css">
+        <link rel="stylesheet" type="text/css" href="/public/css/styles.css">
         <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
         <link rel="apple-touch-icon" sizes="180x180" href="/public/images/icons/apple-touch-icon.png">
         <link rel="icon" type="image/png" sizes="32x32" href="/public/images/icons/favicon-32x32.png">
@@ -26,6 +26,6 @@
             </div>
         </header>
         <?php echo $data['content']; ?>
-        <script type="module" src="/public/js/scripts_0.1.js"></script>
+        <script type="module" src="/public/js/scripts.js"></script>
     </body>
 </html>
