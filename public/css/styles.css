@@ -54,6 +54,15 @@ input, textarea, select {
 table input, table select, table textarea {
     width: 100%;
 }
+table {
+    margin: 10px auto;
+    border: 1px solid black;
+    width: 100%;
+}
+td, th {
+    border: 1px solid black;
+    padding: 3px;
+}
 
 button {
     height: 35px;
