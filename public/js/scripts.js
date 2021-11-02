@@ -93,33 +93,59 @@ function ajaxJson(queryString, callback, dataObject)
 
 //Change Handler
 function changeHandler(obj)
-{    
-    if (obj.id == "status")
-    {
-        ajax('/ticket/changeStatus', function(){
-            alert('Статус заявки изменен на "'+obj.selectedOptions[0].innerText+'"');
-        }, 'id='+obj.offsetParent.parentNode.dataset.rowId+'&val='+obj.value);
-    }
+{
+    
 }
 
 //Обработчик кликов на странице
 function clickHandler(obj)
 {
-    if (obj.id == 'addNewTicket') {
-        var type = document.getElementById('type').selectedOptions[0].value;
-        var hardware = document.getElementById('hardware').selectedOptions[0].value;
-        var description = document.getElementById('description').value;
-        var customer = document.getElementById('customer').value;
-        var datetime = document.getElementById('date').value+' '+document.getElementById('time').value;
-        var priority = document.getElementById('priority').selectedOptions[0].value;
-        var contact = document.getElementById('contact').value;
-        var executor = document.getElementById('executor').value;
-        var params = 'type='+type+'&hardware='+hardware+'&description='+description+'&customer='+customer+'&datetime='+datetime+'&priority='+priority+'&contact='+contact+'&executor='+executor;
-        ajax('/ticket/addNewTicket', function(){
-			document.location='/';
+    if (obj.id == 'deleteUser') {
+        if (confirm('Удалить пользователя?')) {
+            var params = 'tgId='+obj.parentNode.parentNode.cells[2].innerText;
+            ajax('/users/deleteUser', function(data){
+    			alert('Пользователь удален');
+            }, params);
+        }
+    }
+    
+    if (obj.id == 'setAdmin') {
+        if (document.getElementById('setName').value == '') {
+            var name = document.getElementById('selectAdmin').selectedOptions[0].innerText;
+            name = name.substring(name.indexOf('|')+2, name.length);
+        } else {
+            var name = document.getElementById('setName').value;
+        }
+        var params = 'id='+document.getElementById('selectAdmin').selectedOptions[0].value+'&name='+name;
+        ajax('/params/changeAdmin', function(data){
+            console.log(data);
+            alert('Администратор изменен на "'+document.getElementById('selectAdmin').selectedOptions[0].innerText+'"');
         }, params);
     }
 
+    if (obj.id == 'deleteSelected') {
+        var table = obj.parentNode.previousSibling;
+        var idArr = '(';
+        for (let i = 1; i < table.rows.length; i++) {
+            var row = table.rows[i];
+            var select = row.cells[0].children[0];
+            if (select.checked) {
+                idArr += row.dataset.rowId+', ';
+            }
+        }
+        idArr += ')';
+        idArr = idArr.replace(', )', ')');
+        if (idArr != '()') {
+            if (confirm('Удалить выбранных пользователей?')) {
+                var params = 'idArr='+idArr;
+                ajax('/offices/deleteOffices', function(data){
+                    console.log(data)
+                }, params);
+            }
+        } else {
+            alert('Ничего не выбрано!');
+        }
+    }
 }
 
 function mask(event) {

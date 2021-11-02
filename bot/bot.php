@@ -10,7 +10,8 @@
     $body = file_get_contents('php://input');
     $data = json_decode($body, true);
     file_put_contents('log', '['.(date('Y-m-d H:i:s')).'] '.(json_encode($data, JSON_UNESCAPED_UNICODE))."\n", FILE_APPEND);
-    $bot = new TG('2099253626:AAH8wHq3fRhWpNB3By6R5u2FLBdoLWfdOso');
+    //$bot = new TG('2099253626:AAH8wHq3fRhWpNB3By6R5u2FLBdoLWfdOso');
+    $bot = new TG('2061690426:AAEx1ss_tw2MefiudZdpCftqGBqJ7O-1QcI');
 	/*try {
     	$bot->send('248598993', json_encode($data, JSON_UNESCAPED_UNICODE), 'HTML');
 	} catch (Exception $e) {

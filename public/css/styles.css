@@ -57,20 +57,29 @@ table input, table select, table textarea {
 table {
     margin: 10px auto;
     border: 1px solid black;
-    width: 100%;
 }
 td, th {
     border: 1px solid black;
     padding: 3px;
 }
-
+th {
+    font-weight: bold;
+    text-align: center;
+    background-color: #00000014;
+}
+td:last-child {
+    text-align: center;
+}
+table button {
+    padding: 3px 6px;
+    margin: 5px 0;
+}
 button {
-    height: 35px;
     background-color: #008a41 !important;
     color: #ffffff;
     cursor: pointer;
-    padding: 5px 30px;
-    margin: 10px 0;
+    padding: 6px 12px;
+    margin: 5px 0;
     font-size: 14px;
     border: none;
     border-radius: 4px;
@@ -84,43 +93,32 @@ button:active {
     background-color: #00e26a;
 }
 
-td, th {
-    padding: 3px;
-}
-th {
-    font-weight: normal;
-    text-align: left;
-}
-
-.ticket-list {
-    width: 90%;
-    margin-top: 20px;
-}
-.ticket-list td, .ticket-list th {
-    border: 1px solid black;
-}
-.ticket-list th {
-	font-weight: bold;
-    text-align: center;
-}
-
 textarea {
     resize: none;
 }
-
-.status {
-    background-color: rgb(235, 235, 235) !important;
-    text-align: center;
-    width: 98%;
-    height: 28px;
-    border-radius: 5px;
-    margin: auto;
-    padding-top: 6px;
+input[type=submit],.signInButton {
     display: block;
-    pointer-events: none;
+    width: 250px;
+    background-color: #008a41;
+    color: white;
+    padding: 14px 20px;
+    margin-top:20px; 
+    margin-left: 100px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-size: 18px;
+    transition: 0.25s;
 }
-.on_waiting  {
-    background-color: #FFECB3 !important;
+input[id=login], input[id=password] {
+    display: inline-block;
+    width: 350px;
+    padding: 5px 10px;
+    margin: 10px 50px;
+    border: 1px solid #a7a7a7;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 20px;
 }
 
 .title {
@@ -156,22 +154,13 @@ textarea {
 
 .system-title{
     height: 44px;
-    background: #d6dde3;
+    background: #d9f7e7;
+    margin-bottom: 30px;
 }
-
 .system-title h2{
     text-align: center;
     text-transform: uppercase;
     padding-top: 10px;
-}
-
-.ticket {
-    margin-top: 20px;
-    text-align: center;
-}
-.ticket_title {
-    font-weight: bold;
-    font-size: 16px;
 }
 
 .content-login{ min-height: calc(100vh - 300px); }
@@ -196,32 +185,76 @@ textarea {
     text-align: center;
     font-size: 20px;
 }
-input[type=submit],.signInButton {
-    display: block;
-    width: 250px;
-    background-color: #008a41;
-    color: white;
-    padding: 14px 20px;
-    margin-top:20px; 
-    margin-left: 100px;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 18px;
-    transition: 0.25s;
-}
-input[id=login], input[id=password] {
-    display: inline-block;
-    width: 350px;
-    padding: 5px 10px;
-    margin: 10px 50px;
-    border: 1px solid #a7a7a7;
-    border-radius: 4px;
-    box-sizing: border-box;
-    font-size: 20px;
-}
 
 .logo {
     /*margin: 125px auto 0;*/
     text-align: center;
+}
+
+.systems {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    margin-top: 35px;
+}
+.systems a {
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+    text-align: center;
+    vertical-align: middle;
+    color: #a7a7a7;
+    transition: 0.3s;
+}
+.menuItem {
+    width: 260px;
+    height: 160px;
+    padding: 15px;
+    margin: 15px;
+    border: 1px solid #333333;
+    border-radius: 10px;
+}
+.menuItem i {
+    font-size: 60pt;
+    margin-bottom: 20px;
+    margin-top: 15px;
+}
+
+.status {
+    background-color: rgb(235, 235, 235) !important;
+    text-align: center;
+    width: 98%;
+    height: 28px;
+    border-radius: 5px;
+    margin: auto;
+    padding-top: 6px;
+    display: block;
+    pointer-events: none;
+}
+.on_waiting  {
+    background-color: #FFECB3 !important;
+}
+
+.ticket-list {
+    width: 90%;
+    margin-top: 20px;
+}
+.ticket-list td, .ticket-list th {
+    border: 1px solid black;
+}
+.ticket-list th {
+	font-weight: bold;
+    text-align: center;
+}
+.ticket {
+    margin-top: 20px;
+    text-align: center;
+}
+.ticket_title {
+    font-weight: bold;
+    font-size: 16px;
+}
+
+.msgSettings {
+    width: 30%;
 }

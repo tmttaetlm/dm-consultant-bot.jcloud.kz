@@ -18,6 +18,7 @@ class OfficesController extends Controller
     {
         $data['systemTitle'] = 'Отделения';
         $data['wrapper'] = $this->getOfficesTable();
+        $data['wrapper'] .= $this->view->generate('offices/manage',$data);
         $data['content'] = $this->view->generate('framework/system',$data);
         $data['user'] = $_SESSION['login'];
         echo $this->view->generate('templateView',$data);
@@ -28,11 +29,16 @@ class OfficesController extends Controller
         $data = $this->model->getOfficesTable();
         $title = '';
         $columns = [
-            'num'=>'№',
-            'city'=>'Город',
-            'adres'=>'Адрес',
-            'phone'=>'Телефон'
+            'action' => "\0",
+            'cityName' => 'Город',
+            'adres' => 'Адрес',
+            'phone' => 'Телефон'
         ];
         return $this->view->cTable($title,$columns,$data);
+    }
+
+    public function actionDeleteOffices()
+    {
+        return $this->model->deleteOffices($_POST);
     }
 }
