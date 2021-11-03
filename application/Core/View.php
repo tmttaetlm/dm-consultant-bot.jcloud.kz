@@ -16,12 +16,13 @@ class View
         return ob_get_clean();
     }
        
-    public function cTable($caption,$columns,$tableData,$class = null)
+    public function cTable($caption,$columns,$tableData,$class = null,$id = null)
     {
        $data['caption'] = $caption;
        $data['columns'] = $columns;
        $data['tableData'] = $tableData;
        $data['class'] = $class;
+       $data['id'] = $id;
        return $this->generate('framework/table', $data);
     }
     

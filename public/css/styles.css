@@ -9,7 +9,6 @@ table {
 	border-collapse: collapse;
 	border-spacing: 0;
     margin: 0 auto;
-    width: 50%;
 }
 
 /* Fonts */
@@ -55,7 +54,7 @@ table input, table select, table textarea {
     width: 100%;
 }
 table {
-    margin: 10px auto;
+    /*margin: 10px auto;*/
     border: 1px solid black;
 }
 td, th {
@@ -66,9 +65,6 @@ th {
     font-weight: bold;
     text-align: center;
     background-color: #00000014;
-}
-td:last-child {
-    text-align: center;
 }
 table button {
     padding: 3px 6px;
@@ -257,4 +253,24 @@ input[id=login], input[id=password] {
 
 .msgSettings {
     width: 30%;
+}
+
+.leftSide {
+    float: left;
+    width: 49%;
+}
+.rightSide {
+    float: right;
+    width: 49%;
+}
+
+.deleteBtn {
+    text-align: center;
+}
+
+.tickets {
+    display: flex;
+}
+.tickets-item {
+    margin: 0 5px;
 }

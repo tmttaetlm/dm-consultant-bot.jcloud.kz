@@ -1,4 +1,4 @@
-<table class="<?php echo $data['class'];?>">
+<table class="<?php echo $data['class'];?>" id="<?php echo $data['id'];?>">
     <caption><?php echo $data['caption']; ?></caption>
     <tr>
     <?php foreach ($data['columns'] as $column=>$header):

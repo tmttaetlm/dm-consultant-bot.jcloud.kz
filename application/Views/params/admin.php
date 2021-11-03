@@ -6,22 +6,7 @@
     <input id="adminId" type="text" readonly value="<?php echo $data['params']['admin_id'] ?>"/>
     <br>
     <label for="selectAdmin">Выбрать администратора:</label>
-    <select name="selectAdmin" id="selectAdmin">
-        <?php foreach ($data['items'] as $item=>$value):?>	
-        <option value="<?php if (is_array($value)) { array_key_exists('value', $value) ? print($value['value']) : print(''); } else { print($value); } ?>"
-                data-oid="<?php if (is_array($value)) { array_key_exists('oid', $value) ? print($value['oid']) : print(''); } else { print(''); } ?>"
-            <?php if (is_array($value)) {
-                    if (array_key_exists('selected', $data)) {
-                        if ($value['value']==$data['selected']) { echo 'selected'; }
-                    }
-                } else {
-                        if ($value==$data['selected']) { echo 'selected'; }
-                };
-                array_key_exists('data-oid', $data['items']) ? print('data-oid="'.$data['data-oid'].'"') : print(""); ?>>
-                <?php if (is_array($value)) { array_key_exists('item', $value) ? print($value['item']) : print(''); } else { print($value); } ?>
-        </option>
-        <?php endforeach;?>
-    </select>
+    <?php echo $data['select'] ?>
     <label for="setName">Назначить имя:</label>
     <input id="setName" type="text" />
     <button id="setAdmin">Назначить</button>

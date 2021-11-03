@@ -27,5 +27,6 @@
         </header>
         <?php echo $data['content']; ?>
         <script type="module" src="/public/js/scripts.js"></script>
+        <script src="https://unpkg.com/imask"></script>
     </body>
 </html>

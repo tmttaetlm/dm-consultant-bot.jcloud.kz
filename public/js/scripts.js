@@ -94,21 +94,17 @@ function ajaxJson(queryString, callback, dataObject)
 //Change Handler
 function changeHandler(obj)
 {
-    
+    if (obj.id == 'selectRegion') {
+        var param = 'region='+obj.selectedOptions[0].value;
+        ajax('/offices/getCities', function(data){
+            document.getElementById('selectCity').outerHTML = data;
+        }, param);
+    }
 }
 
 //Обработчик кликов на странице
 function clickHandler(obj)
 {
-    if (obj.id == 'deleteUser') {
-        if (confirm('Удалить пользователя?')) {
-            var params = 'tgId='+obj.parentNode.parentNode.cells[2].innerText;
-            ajax('/users/deleteUser', function(data){
-    			alert('Пользователь удален');
-            }, params);
-        }
-    }
-    
     if (obj.id == 'setAdmin') {
         if (document.getElementById('setName').value == '') {
             var name = document.getElementById('selectAdmin').selectedOptions[0].innerText;
@@ -124,7 +120,12 @@ function clickHandler(obj)
     }
 
     if (obj.id == 'deleteSelected') {
-        var table = obj.parentNode.previousSibling;
+        var dbtable = document.URL.substring(document.URL.lastIndexOf('/')+1, document.URL.length);
+        var table = document.getElementById(dbtable+'List');
+        if (table == null) {
+            table = obj.parentElement.parentElement.children[0];
+            dbtable = 'tickets';
+        }
         var idArr = '(';
         for (let i = 1; i < table.rows.length; i++) {
             var row = table.rows[i];
@@ -136,44 +137,59 @@ function clickHandler(obj)
         idArr += ')';
         idArr = idArr.replace(', )', ')');
         if (idArr != '()') {
-            if (confirm('Удалить выбранных пользователей?')) {
-                var params = 'idArr='+idArr;
-                ajax('/offices/deleteOffices', function(data){
-                    console.log(data)
+            switch (dbtable) {
+                case 'users':
+                    var msg = 'Удалить выбранных пользователей?';
+                    var method = '/users/deleteusers';
+                    break;
+                case 'offices':
+                    var msg = 'Удалить выбранные отделения?';
+                    var method = '/offices/deleteOffices';
+                    break;
+                case 'tickets':
+                    var msg = 'Удалить выбранные заявки?';
+                    var method = '/tickets/deleteTickets';
+                    break;
+                default:
+                    break;
+            }
+            if (confirm(msg)) {
+                var params = 'idArr='+idArr+'&mode='+table.parentElement.id;
+                ajax(method, function(data){
+                    console.log(data);
+                    table.outerHTML = data;
+                    console.log(table);
                 }, params);
             }
         } else {
             alert('Ничего не выбрано!');
         }
     }
+
+    if (obj.id == 'addOffice') {
+        var params = 'city='+document.getElementById('selectCity').selectedOptions[0].value+'&phone='+document.getElementById('officePhone').value+
+            '&adres='+document.getElementById('officeAdres').value+'&mediaUrl='+document.getElementById('officeMediaUrl').value;
+        ajax('/offices/addOffice', function(data){
+            document.getElementById('officesListMain').outerHTML = data;
+            //console.log(data);
+        }, params);
+    }
+
+    if (obj.id == 'addJewel') {
+        var params = 'name='+document.getElementById('jewelsName').value;
+        ajax('/jewels/addJewel', function(data){
+            document.getElementById('jewelsList').outerHTML = data;
+            //console.log(data);
+        }, params);
+    }
 }
 
 function mask(event) {
     if (event.target.type == 'tel') {
-        var pos = event.target.selectionStart;
-        if (pos < 3) event.preventDefault();
-        var matrix = "+7 (___) ___ ____",
-            i = 0,
-            def = matrix.replace(/\D/g, ""),
-            val = event.target.value.replace(/\D/g, ""),
-            new_value = matrix.replace(/[_\d]/g, function(a) {
-                return i < val.length ? val.charAt(i++) || def.charAt(i) : a
-            });
-        i = new_value.indexOf("_");
-        if (i != -1) {
-            i < 5 && (i = 3);
-            new_value = new_value.slice(0, i)
-        }
-        var reg = matrix.substr(0, event.target.value.length).replace(/_+/g,
-            function(a) {
-                return "\\d{1," + a.length + "}"
-            }).replace(/[+()]/g, "\\$&");
-        reg = new RegExp("^" + reg + "$");
-        if (!reg.test(event.target.value) || event.target.value.length < 5 || event.keyCode > 47 && event.keyCode < 58) {
-            event.target.value = new_value;
-        };
-        if (event.type == "focusout" && event.target.value.length < 5)  {
-            event.target.value = "";
-        }
+        var maskOptions = {
+            mask: '+7 000 000 0000',
+            lazy: false
+        } 
+        var mask = new IMask(event.target, maskOptions);
     }
 }

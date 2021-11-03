@@ -17,7 +17,7 @@ class UsersController extends Controller
     public function actionIndex()
     {
         $data['systemTitle'] = 'Пользователи';
-        $data['wrapper'] = $this->getUsersTable();
+        $data['wrapper'] = $this->getUsersTable().'<div class="deleteBtn"><button id="deleteSelected">Удалить выбранные</button></div>';
         $data['content'] = $this->view->generate('framework/system',$data);
         $data['user'] = $_SESSION['login'];
         echo $this->view->generate('templateView',$data);
@@ -28,17 +28,16 @@ class UsersController extends Controller
         $data = $this->model->getUsersTable();
         $title = '';
         $columns = [
-            'num' => '№',
+            'action' => "\0",
             'tgName' => 'Имя пользователя',
             'tgId' => 'ID телеграмма',
-            'name' => 'ФИО',
-            'action' => 'Действия'
+            'name' => 'ФИО'
         ];
-        return $this->view->cTable($title,$columns,$data);
+        return $this->view->cTable($title,$columns,$data,'','usersList');
     }
 
-    public function actionDeleteUser()
+    public function actionDeleteUsers()
     {
-        $this->model->deleteUser($_POST);
+        $this->model->deleteUsers($_POST);
     }
 }

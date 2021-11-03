@@ -14,21 +14,21 @@ class UsersModel extends Model
 
     public function getUsersTable()
     {
-        $sql = "SELECT tgId, tgName, firstName, lastName FROM users";
+        $sql = "SELECT id, tgId, tgName, firstName, lastName FROM users";
         $db = Db::getDb();
         $data = $db->execQuery($sql,[]);
-        $data = self::addRowNumbers($data);
         for ($i=0; $i<count($data); $i++) {
             $data[$i]['name'] = $data[$i]['firstName'].' '. $data[$i]['lastName'];
-            $data[$i]['action'] = '<button id="deleteUser">Удалить</button>';
+            $data[$i]['action'] = '<input type="checkbox" name="usersToDelete" />';
         }
         return $data;
     }
 
-    public function deleteUser($params)
+    public function deleteUsers($params)
     {
-        $sql = "DELETE FROM users WHERE tgId=:tgId";
+        $sql = "DELETE FROM users WHERE id IN ".$params['idArr'];
         $db = Db::getDb();
         $data = $db->execQuery($sql,$params);
+        return $data;
     }
 }

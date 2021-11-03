@@ -30,9 +30,11 @@ class ParamsController extends Controller
         foreach ($params as $value) {
             $paramArr[$value['name']] = $value['value'];
         }
-        $data = ['selected' => $paramArr['admin_id'],
-                 'items' => $this->model->getUsersForAdmin(),
-                 'params' => $paramArr];
+        $data = ['id' => 'selectAdmin',
+                 'selected' => $paramArr['admin_id'],
+                 'items' => $this->model->getUsersForAdmin()];
+        $data['select'] = $this->view->generate('framework/select',$data);
+        $data['params'] = $paramArr;
         return $this->view->generate('params/admin',$data);
     }
 
